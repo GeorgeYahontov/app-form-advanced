@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h2>Регистрация пользователя</h2>
+      <form #userForm = "ngForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="name">Имя:</label>
+          <input id="name" type="text" class="form-control" name = "name" required minlength="4" maxlength="10"
+            #name="ngModel"
+            [(ngModel)]="model.name">
+          <div *ngIf="formErrors.name" class="alert alert-danger">{{formErrors.name}}</div>
+        </div>
+        <div class="mb-3">
+          <label for="age">Возраст:</label>
+          <input id="age" type="number" class="form-control" name = "age" required
+                 #age="ngModel"  [(ngModel)]="model.age">
+          <div *ngIf="formErrors.age" class="alert alert-danger">{{formErrors.age}}</div>
+
+        </div>
+        <div class="mb-3">
+          <label for="role">Роль:</label>
+          <select name="role" id="role" class="form-select" required
+                  [(ngModel)]="model.role">
+            <option *ngFor="let role of roles"
+                    [value]="role">
+              {{role}}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-info" [disabled]="!userForm.form.valid" >Отправить</button>
+        </div>
+      </form>
+      <hr class="mt-4">
+
+
+
+    </div>
+  </div>
+</div>
