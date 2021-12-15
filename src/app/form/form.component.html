@@ -7,11 +7,25 @@
           <label for="name">Имя:</label>
           <input id="name" type="text" class="form-control"
           formControlName="login">
+          <div class="alert alert-danger"
+          *ngIf="userForm.get('login').hasError('required')
+                && (userForm.get('login').touched || userForm.get('login').dirty)">
+            Обязательное поле.
+          </div>
         </div>
         <div class="mb-3">
           <label for="age">Пароль:</label>
           <input id="age" type="text" class="form-control"
           formControlName="password">
+          <div class="alert alert-danger"
+               *ngIf="userForm.get('password').hasError('required')
+                && (userForm.get('password').touched || userForm.get('password').dirty)">
+            Обязательное поле.
+          </div><div class="alert alert-danger"
+               *ngIf="userForm.get('password').hasError('minLength')
+                && (userForm.get('password').touched || userForm.get('password').dirty)">
+            Требуется минимум 7 символов
+          </div>
         </div>
 
         <div class="mb-3">
