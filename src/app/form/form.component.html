@@ -4,100 +4,54 @@
       <h2>Регистрация пользователя</h2>
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
-          <label for="name">Имя:</label>
-          <input id="name" type="text" class="form-control" placeholder="Имя"
+          <label for="name">{{placeholders.name}} <span class="text-danger">*</span></label>
+          <input id="name" type="text" class="form-control" placeholder="{{placeholders.name}}"
                  formControlName="name"
-                 [ngClass] = "{'is-valid': userForm.controls.name.valid,
-                               'is-invalid': userForm.controls.name.invalid && userForm.controls.name.touched}">
-          <div class="valid-feedback"
-               *ngIf="userForm.controls.name.valid">{{formSuccess.name}}</div>
-          <div class="invalid-feedback"
-               *ngIf="userForm.controls.name.invalid && userForm.controls.name.touched">{{formErrors.name}}</div>
+                 [ngClass] = "{'is-valid': name.valid, 'is-invalid': name.invalid && name.touched}">
+          <div *ngIf="name.valid" class="valid-feedback">{{formSuccess.name}}</div>
+          <div class="invalid-feedback" *ngIf="name.invalid && name.touched">{{formErrors.name}}</div>
         </div>
         <div class="mb-3">
-          <label for="password">Пароль:</label>
-          <input id="password" type="password" class="form-control" placeholder="Пароль"
+          <label for="password">{{placeholders.password}} <span class="text-danger">*</span></label>
+          <input id="password" type="password" class="form-control" placeholder="{{placeholders.password}}"
           formControlName="password"
-                 [ngClass] = "{'is-valid': userForm.controls.password.valid,
-                               'is-invalid': userForm.controls.password.invalid && userForm.controls.password.touched}">
-          <div class="valid-feedback"
-               *ngIf="userForm.controls.password.valid">{{formSuccess.password}}</div>
-          <div class="invalid-feedback"
-               *ngIf="userForm.controls.password.invalid && userForm.controls.password.touched">{{formErrors.password}}</div>
+                 [ngClass] = "{'is-valid': password.valid, 'is-invalid': password.invalid && password.touched}">
+          <div *ngIf="password.valid" class="valid-feedback">{{formSuccess.password}}</div>
+          <div *ngIf="password.invalid && password.touched" class="invalid-feedback">{{formErrors.password}}</div>
         </div>
         <div class="mb-3">
-          <label for="email">Email:</label>
-          <input id="email" type="email" class="form-control" placeholder="Email"
+          <label for="email">{{placeholders.email}} <span class="text-danger">*</span></label>
+          <input id="email" type="email" class="form-control" placeholder="{{placeholders.email}}"
                   formControlName="email"
-                 [ngClass] = "{'is-valid': userForm.controls.email.valid,
-                               'is-invalid': userForm.controls.email.invalid && userForm.controls.email.touched}">
-          <div class="valid-feedback"
-               *ngIf="userForm.controls.email.valid">{{formSuccess.email}}</div>
-          <div class="invalid-feedback"
-               *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched">{{formErrors.email}}</div>
+                 [ngClass] = "{'is-valid': email.valid,'is-invalid': email.invalid && email.touched}">
+          <div *ngIf="email.valid" class="valid-feedback">{{formSuccess.email}}</div>
+          <div *ngIf="email.invalid && email.touched" class="invalid-feedback">{{formErrors.email}}</div>
         </div>
         <div class="mb-3">
-          <label for="age">Возраст:</label>
-          <input id="age" type="number" class="form-control" placeholder="Возраст"
+          <label for="age">{{placeholders.age}} <span class="text-danger">*</span></label>
+          <input id="age" type="number" class="form-control" placeholder="{{placeholders.age}}"
           formControlName="age"
-                 [ngClass] = "{'is-valid': userForm.controls.age.valid,
-                               'is-invalid': userForm.controls.age.invalid && userForm.controls.age.touched}"
+                 [ngClass] = "{'is-valid': age.valid,'is-invalid': age.invalid && age.touched}"
           >
-          <div class="valid-feedback"
-               *ngIf="userForm.controls.age.valid">{{formSuccess.age}}</div>
-          <div class="invalid-feedback"
-               *ngIf="userForm.controls.age.invalid && userForm.controls.age.touched">{{formErrors.age}}</div>
+          <div *ngIf="age.valid" class="valid-feedback">{{formSuccess.age}}</div>
+          <div *ngIf="age.invalid && age.touched" class="invalid-feedback">{{formErrors.age}}</div>
         </div>
         <div class="mb-3">
-          <label for="role">Роль:</label>
+          <label for="role">Роль <span class="text-danger">*</span></label>
           <select  id="role" class="form-select" formControlName="role"
-                   [ngClass] = "{'is-valid': userForm.controls.role.valid,
-                               'is-invalid': userForm.controls.role.invalid && userForm.controls.role.touched}"
-          >
-            <option [value]="null" selected disabled>Выберите роль</option>
+                   [ngClass] = "{'is-valid': role.valid,'is-invalid': role.invalid && role.touched}">
+            <option [value]="null" selected disabled>{{placeholders.role}}</option>
             <option *ngFor="let role of roles" [value]="role"> {{role}}</option>
           </select>
-          <div class="valid-feedback"
-               *ngIf="userForm.controls.role.valid">{{formSuccess.role}}</div>
-          <div class="invalid-feedback"
-               *ngIf="userForm.controls.role.invalid && userForm.controls.role.touched">{{formErrors.role}}
-          </div>
+          <div *ngIf="role.valid" class="valid-feedback">{{formSuccess.role}} </div>
+          <div *ngIf="role.invalid && role.touched" class="invalid-feedback">{{formErrors.role}}</div>
         </div>
 
         <div class="mb-3">
-          <button class="btn btn-info" [disabled]="userForm.invalid" >Отправить</button>
+          <button class="btn btn-info" [disabled]="userForm.invalid">Отправить</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
-<!--<form #userForm = "ngForm" (ngSubmit)="onSubmit()">-->
-<!--  <div class="mb-3">-->
-<!--    <label for="name">Имя:</label>-->
-<!--    <input id="name" type="text" class="form-control" name = "name" required minlength="4" maxlength="10"-->
-<!--           #name="ngModel"-->
-<!--           [(ngModel)]="model.name">-->
-<!--    <div *ngIf="formErrors.name" class="alert alert-danger">{{formErrors.name}}</div>-->
-<!--  </div>-->
-<!--  <div class="mb-3">-->
-<!--    <label for="age">Возраст:</label>-->
-<!--    <input id="age" type="number" class="form-control" name = "age" required-->
-<!--           #age="ngModel"  [(ngModel)]="model.age">-->
-<!--    <div *ngIf="formErrors.age" class="alert alert-danger">{{formErrors.age}}</div>-->
 
-<!--  </div>-->
-<!--  <div class="mb-3">-->
-<!--    <label for="role">Роль:</label>-->
-<!--    <select name="role" id="role" class="form-select" required-->
-<!--            [(ngModel)]="model.role">-->
-<!--      <option *ngFor="let role of roles"-->
-<!--              [value]="role">-->
-<!--        {{role}}-->
-<!--      </option>-->
-<!--    </select>-->
-<!--  </div>-->
-<!--  <div class="mb-3">-->
-<!--    <button class="btn btn-info" [disabled]="!userForm.form.valid" >Отправить</button>-->
-<!--  </div>-->
-<!--</form>-->

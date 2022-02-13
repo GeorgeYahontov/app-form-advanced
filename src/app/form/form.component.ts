@@ -1,7 +1,8 @@
 import { Component, OnInit} from '@angular/core';
-import {FormBuilder,  FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../user.class";
 import {emailValidator, rangeValidator} from "../custom-validators";
+import {FORM_ERRORS, FORM_PLACEHOLDERS, FORM_ROLES, FORM_SUCCESS, FORM_VALIDATION_MESSAGES} from "../form-data";
 
 @Component({
   selector: 'app-form',
@@ -11,52 +12,20 @@ import {emailValidator, rangeValidator} from "../custom-validators";
 export class FormComponent implements OnInit {
 
 
+  placeholders = FORM_PLACEHOLDERS;
+  formErrors = FORM_ERRORS;
+  formSuccess = FORM_SUCCESS;
+  validationMessages = FORM_VALIDATION_MESSAGES;
+  roles = FORM_ROLES;
 
   userForm = new FormGroup({});
-
   user: User = new User(0,null,null,null, null,null);
-  roles:string[] = ['Гость','Модератор','Администратор'];
 
-  formErrors: any = {
-  name:'',
-  password:'',
-  email:'',
-  age:'',
-  role:''
-}
-formSuccess: any = {
-  name:'Принято!',
-  password:'Принято!',
-  email:'Принято!',
-  age:'Принято!',
-  role:'Принято!'
-}
-
-  validationMessages: any = {
-    name: {
-      required:'Имя обязательно.',
-      minlength:'Имя должно содержать не менее 4 символов.',
-      maxlength:'Имя должно содержать не более 15 символов.'
-    },
-    password: {
-      required:'Пароль обязателен.',
-      minlength:'Пароль должен содержать не менее 7 символов.',
-      maxlength:'Пароль должен содержать не более 25 символов.'
-    },
-    email:{
-      required:'Email обязателен.',
-      emailValidator:'Неправельный формат email адреса.',
-
-    },
-    age: {
-      required:'Возраст обязателен.',
-      rangeValidator:'Значение должно быть числом в диапазоне 1..122'
-    },
-    role: {
-      required:'Обязательное поле',
-    }
-}
-
+  name: AbstractControl;
+  password: AbstractControl;
+  email: AbstractControl;
+  age: AbstractControl;
+  role: AbstractControl;
 
   constructor(private fb: FormBuilder) { }
 
@@ -73,6 +42,15 @@ formSuccess: any = {
       role:[this.user.role, [Validators.required]]
     });
     this.userForm && this.userForm.valueChanges?.subscribe(() => this.onValueChanged())
+    this.createControls()
+  }
+
+  createControls() :void {
+    this.name = this.userForm.controls['name'];
+    this.password = this.userForm.controls['password'];
+    this.email = this.userForm.controls['email'];
+    this.age = this.userForm.controls['age'];
+    this.role = this.userForm.controls['role'];
   }
 
   onValueChanged():void{
@@ -90,58 +68,7 @@ formSuccess: any = {
 }
 
   onSubmit(): void{
+    console.log()
   }
 
 }
-//
-// model: User = new User(0,'','',null)
-// roles:string[] = ['Гость','Модератор','Администратор'];
-//
-// formErrors = {
-//   name:'',
-//   age:''
-// }
-// validationMessages = {
-//   name: {
-//     required:'Имя обязательно.',
-//     minlength:'Имя должно содержать минимум 4 символа.'
-//   },
-//   age: {
-//     required:'Возраст обязателен.',
-//
-//   }
-// }
-//
-// @ViewChild('userForm')userForm: NgForm | null = null;
-// constructor() { }
-//
-// ngOnInit(): void {
-//
-// }
-// ngAfterViewInit():void{
-//   this.userForm && this.userForm.valueChanges?.subscribe(data => this.onValueChanged(data))
-// }
-//
-// onValueChanged(data?:any):void{
-//   const form = this.userForm?.form;
-//
-//   for (const field in this.formErrors){
-//
-//   this.formErrors[field] = '';
-//   const control = form.get(field);
-//
-//
-//   if(control && control.dirty && control.invalid){
-//     const message = this.validationMessages[field];
-//
-//     for (const key in control.errors){
-//       console.log(message[key])
-//       this.formErrors[field] += message[key] + ' '
-//     }
-//   }
-// }
-// }
-//
-// onSubmit(): void{
-//   console.log('form submitted');
-// }
