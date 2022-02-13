@@ -5,26 +5,62 @@
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="mb-3">
           <label for="name">Имя:</label>
-          <input id="name" type="text" class="form-control"
-          formControlName="login">
-          <div class="alert alert-danger"
-          *ngIf="userForm.get('login').hasError('required')
-                && (userForm.get('login').touched || userForm.get('login').dirty)">
-            Обязательное поле.
-          </div>
+          <input id="name" type="text" class="form-control" placeholder="Имя"
+                 formControlName="name"
+                 [ngClass] = "{'is-valid': userForm.controls.name.valid,
+                               'is-invalid': userForm.controls.name.invalid && userForm.controls.name.touched}">
+          <div class="valid-feedback"
+               *ngIf="userForm.controls.name.valid">{{formSuccess.name}}</div>
+          <div class="invalid-feedback"
+               *ngIf="userForm.controls.name.invalid && userForm.controls.name.touched">{{formErrors.name}}</div>
         </div>
         <div class="mb-3">
-          <label for="age">Пароль:</label>
-          <input id="age" type="text" class="form-control"
-          formControlName="password">
-          <div class="alert alert-danger"
-               *ngIf="userForm.get('password').hasError('required')
-                && (userForm.get('password').touched || userForm.get('password').dirty)">
-            Обязательное поле.
-          </div><div class="alert alert-danger"
-               *ngIf="userForm.get('password').hasError('minLength')
-                && (userForm.get('password').touched || userForm.get('password').dirty)">
-            Требуется минимум 7 символов
+          <label for="password">Пароль:</label>
+          <input id="password" type="password" class="form-control" placeholder="Пароль"
+          formControlName="password"
+                 [ngClass] = "{'is-valid': userForm.controls.password.valid,
+                               'is-invalid': userForm.controls.password.invalid && userForm.controls.password.touched}">
+          <div class="valid-feedback"
+               *ngIf="userForm.controls.password.valid">{{formSuccess.password}}</div>
+          <div class="invalid-feedback"
+               *ngIf="userForm.controls.password.invalid && userForm.controls.password.touched">{{formErrors.password}}</div>
+        </div>
+        <div class="mb-3">
+          <label for="email">Email:</label>
+          <input id="email" type="email" class="form-control" placeholder="Email"
+                  formControlName="email"
+                 [ngClass] = "{'is-valid': userForm.controls.email.valid,
+                               'is-invalid': userForm.controls.email.invalid && userForm.controls.email.touched}">
+          <div class="valid-feedback"
+               *ngIf="userForm.controls.email.valid">{{formSuccess.email}}</div>
+          <div class="invalid-feedback"
+               *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched">{{formErrors.email}}</div>
+        </div>
+        <div class="mb-3">
+          <label for="age">Возраст:</label>
+          <input id="age" type="number" class="form-control" placeholder="Возраст"
+          formControlName="age"
+                 [ngClass] = "{'is-valid': userForm.controls.age.valid,
+                               'is-invalid': userForm.controls.age.invalid && userForm.controls.age.touched}"
+          >
+          <div class="valid-feedback"
+               *ngIf="userForm.controls.age.valid">{{formSuccess.age}}</div>
+          <div class="invalid-feedback"
+               *ngIf="userForm.controls.age.invalid && userForm.controls.age.touched">{{formErrors.age}}</div>
+        </div>
+        <div class="mb-3">
+          <label for="role">Роль:</label>
+          <select  id="role" class="form-select" formControlName="role"
+                   [ngClass] = "{'is-valid': userForm.controls.role.valid,
+                               'is-invalid': userForm.controls.role.invalid && userForm.controls.role.touched}"
+          >
+            <option [value]="null" selected disabled>Выберите роль</option>
+            <option *ngFor="let role of roles" [value]="role"> {{role}}</option>
+          </select>
+          <div class="valid-feedback"
+               *ngIf="userForm.controls.role.valid">{{formSuccess.role}}</div>
+          <div class="invalid-feedback"
+               *ngIf="userForm.controls.role.invalid && userForm.controls.role.touched">{{formErrors.role}}
           </div>
         </div>
 
@@ -32,7 +68,7 @@
           <button class="btn btn-info" [disabled]="userForm.invalid" >Отправить</button>
         </div>
       </form>
-      <hr class="mt-4">
+
     </div>
   </div>
 </div>
