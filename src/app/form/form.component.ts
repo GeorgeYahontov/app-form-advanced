@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {User} from "../user.class";
-import {emailValidator, rangeValidator} from "../custom-validators";
+import {emailValidator, observableUrlValidator, rangeValidator} from "../custom-validators";
 import {FORM_ERRORS, FORM_PLACEHOLDERS, FORM_ROLES, FORM_SUCCESS, FORM_VALIDATION_MESSAGES} from "../form-data";
 
 @Component({
@@ -19,12 +19,13 @@ export class FormComponent implements OnInit {
   roles = FORM_ROLES;
 
   userForm = new FormGroup({});
-  user: User = new User(0,null,null,null, null,null);
+  user: User = new User(0,null,null,null, null,null, null);
 
   name: AbstractControl;
   password: AbstractControl;
   email: AbstractControl;
   age: AbstractControl;
+  site: AbstractControl;
   role: AbstractControl;
 
   constructor(private fb: FormBuilder) { }
@@ -39,6 +40,7 @@ export class FormComponent implements OnInit {
       password: [this.user.password,[Validators.required,Validators.minLength(7),Validators.maxLength(25)]],
       email:[this.user.email, [Validators.required, emailValidator]],
       age:[this.user.age, [Validators.required, rangeValidator(1, 122)]],
+      site:[this.user.site, [Validators.required], [observableUrlValidator]],
       role:[this.user.role, [Validators.required]]
     });
     this.userForm && this.userForm.valueChanges?.subscribe(() => this.onValueChanged())
@@ -50,6 +52,7 @@ export class FormComponent implements OnInit {
     this.password = this.userForm.controls['password'];
     this.email = this.userForm.controls['email'];
     this.age = this.userForm.controls['age'];
+    this.site = this.userForm.controls['site'];
     this.role = this.userForm.controls['role'];
   }
 

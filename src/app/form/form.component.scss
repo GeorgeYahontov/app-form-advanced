@@ -1,0 +1,11 @@
+.text-muted{
+  font-size: 80%;
+  margin-top: 0.25rem;
+  position: relative;
+}
+.loading{
+  position: absolute;
+  height: 30px;
+  right: 0;
+  transform: translateX(-25%) translateY(calc(-100% - 8px));
+}
